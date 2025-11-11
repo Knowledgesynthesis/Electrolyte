@@ -21,7 +21,7 @@ export default function Layout() {
           </Link>
 
           {/* Navigation */}
-          <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
+          <nav className="hidden md:flex items-center space-x-4 text-sm font-medium">
             <Link
               to="/"
               className="transition-colors hover:text-foreground/80 text-foreground/60"
@@ -35,16 +35,40 @@ export default function Layout() {
               Calculators
             </Link>
             <Link
+              to="/algorithms"
+              className="transition-colors hover:text-foreground/80 text-foreground/60"
+            >
+              Algorithms
+            </Link>
+            <Link
               to="/cases"
               className="transition-colors hover:text-foreground/80 text-foreground/60"
             >
               Cases
             </Link>
             <Link
-              to="/assessments"
+              to="/interactions"
               className="transition-colors hover:text-foreground/80 text-foreground/60"
             >
-              Assessments
+              Interactions
+            </Link>
+            <Link
+              to="/acid-base"
+              className="transition-colors hover:text-foreground/80 text-foreground/60"
+            >
+              Acid-Base
+            </Link>
+            <Link
+              to="/reference-cards"
+              className="transition-colors hover:text-foreground/80 text-foreground/60"
+            >
+              Reference
+            </Link>
+            <Link
+              to="/dashboard"
+              className="transition-colors hover:text-foreground/80 text-foreground/60"
+            >
+              Dashboard
             </Link>
           </nav>
 

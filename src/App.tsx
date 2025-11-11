@@ -18,6 +18,23 @@ import ReferenceCards from './pages/ReferenceCards'
 import SodiumCorrection from './pages/calculators/SodiumCorrection'
 import CalciumCorrection from './pages/calculators/CalciumCorrection'
 import PotassiumECG from './pages/calculators/PotassiumECG'
+import MagnesiumReplacement from './pages/calculators/MagnesiumReplacement'
+// Sodium sub-pages
+import SodiumPhysiology from './pages/sodium/Physiology'
+import Hyponatremia from './pages/sodium/Hyponatremia'
+import Hypernatremia from './pages/sodium/Hypernatremia'
+// Potassium sub-pages
+import PotassiumPhysiology from './pages/potassium/Physiology'
+import Hypokalemia from './pages/potassium/Hypokalemia'
+import Hyperkalemia from './pages/potassium/Hyperkalemia'
+// Calcium sub-pages
+import CalciumPhysiology from './pages/calcium/Physiology'
+import Hypocalcemia from './pages/calcium/Hypocalcemia'
+import Hypercalcemia from './pages/calcium/Hypercalcemia'
+// Magnesium sub-pages
+import MagnesiumPhysiology from './pages/magnesium/Physiology'
+import Hypomagnesemia from './pages/magnesium/Hypomagnesemia'
+import Hypermagnesemia from './pages/magnesium/Hypermagnesemia'
 import { useTheme } from './stores/theme'
 
 function App() {
@@ -46,15 +63,31 @@ function App() {
 
           {/* Electrolyte Modules */}
           <Route path="sodium" element={<Sodium />} />
+          <Route path="sodium/physiology" element={<SodiumPhysiology />} />
+          <Route path="sodium/hyponatremia" element={<Hyponatremia />} />
+          <Route path="sodium/hypernatremia" element={<Hypernatremia />} />
+
           <Route path="potassium" element={<Potassium />} />
+          <Route path="potassium/physiology" element={<PotassiumPhysiology />} />
+          <Route path="potassium/hypokalemia" element={<Hypokalemia />} />
+          <Route path="potassium/hyperkalemia" element={<Hyperkalemia />} />
+
           <Route path="calcium" element={<Calcium />} />
+          <Route path="calcium/physiology" element={<CalciumPhysiology />} />
+          <Route path="calcium/hypocalcemia" element={<Hypocalcemia />} />
+          <Route path="calcium/hypercalcemia" element={<Hypercalcemia />} />
+
           <Route path="magnesium" element={<Magnesium />} />
+          <Route path="magnesium/physiology" element={<MagnesiumPhysiology />} />
+          <Route path="magnesium/hypomagnesemia" element={<Hypomagnesemia />} />
+          <Route path="magnesium/hypermagnesemia" element={<Hypermagnesemia />} />
 
           {/* Calculators */}
           <Route path="calculators" element={<Calculators />} />
           <Route path="calculators/sodium-correction" element={<SodiumCorrection />} />
           <Route path="calculators/calcium-correction" element={<CalciumCorrection />} />
           <Route path="calculators/potassium-ecg" element={<PotassiumECG />} />
+          <Route path="calculators/magnesium-replacement" element={<MagnesiumReplacement />} />
 
           {/* Cases, Interactions & Assessments */}
           <Route path="cases" element={<Cases />} />
