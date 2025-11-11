@@ -11,6 +11,7 @@ export default function Calculators() {
       path: '/calculators/sodium-correction',
       icon: Droplet,
       electrolyte: 'Sodium',
+      comingSoon: false,
     },
     {
       name: 'Potassium ECG Visualizer',
@@ -18,6 +19,7 @@ export default function Calculators() {
       path: '/calculators/potassium-ecg',
       icon: Heart,
       electrolyte: 'Potassium',
+      comingSoon: false,
     },
     {
       name: 'Calcium Albumin Corrector',
@@ -25,6 +27,7 @@ export default function Calculators() {
       path: '/calculators/calcium-correction',
       icon: Activity,
       electrolyte: 'Calcium',
+      comingSoon: false,
     },
     {
       name: 'Magnesium Replacement Calculator',
@@ -32,7 +35,7 @@ export default function Calculators() {
       path: '/calculators/magnesium-replacement',
       icon: Calculator,
       electrolyte: 'Magnesium',
-      comingSoon: true,
+      comingSoon: false,
     },
   ]
 
