@@ -1,0 +1,219 @@
+/* Print-specific styles for Reference Cards */
+
+@media print {
+  /* Hide non-printable elements */
+  .no-print {
+    display: none !important;
+  }
+
+  /* Body styling for print */
+  body {
+    background: white !important;
+    color: black !important;
+  }
+
+  /* Page breaks */
+  .reference-card {
+    page-break-after: always;
+    page-break-inside: avoid;
+    break-after: page;
+    break-inside: avoid;
+    margin: 0;
+    padding: 1rem;
+    border: 2px solid #000 !important;
+    box-shadow: none !important;
+  }
+
+  /* Last card shouldn't force a page break */
+  .reference-card:last-child {
+    page-break-after: auto;
+    break-after: auto;
+  }
+
+  /* Optimize text for print */
+  body,
+  .reference-card * {
+    color: black !important;
+    background: white !important;
+  }
+
+  /* Keep semantic backgrounds for clarity */
+  .bg-red-100,
+  .bg-red-50 {
+    background: #fee !important;
+    border: 1px solid #c00 !important;
+  }
+
+  .bg-blue-100,
+  .bg-blue-50 {
+    background: #eff6ff !important;
+    border: 1px solid #2563eb !important;
+  }
+
+  .bg-green-100,
+  .bg-green-50 {
+    background: #f0fdf4 !important;
+    border: 1px solid #16a34a !important;
+  }
+
+  .bg-orange-100,
+  .bg-orange-50 {
+    background: #ffedd5 !important;
+    border: 1px solid #ea580c !important;
+  }
+
+  .bg-purple-100,
+  .bg-purple-50 {
+    background: #faf5ff !important;
+    border: 1px solid #9333ea !important;
+  }
+
+  .bg-amber-100,
+  .bg-amber-50 {
+    background: #fef3c7 !important;
+    border: 1px solid #d97706 !important;
+  }
+
+  .bg-indigo-100,
+  .bg-indigo-50 {
+    background: #eef2ff !important;
+    border: 1px solid #4f46e5 !important;
+  }
+
+  /* Card headers with color coding */
+  .bg-blue-100.dark\:bg-blue-950,
+  [class*="bg-blue"] {
+    background: #dbeafe !important;
+    color: #1e40af !important;
+  }
+
+  .bg-purple-100.dark\:bg-purple-950,
+  [class*="bg-purple"] {
+    background: #e9d5ff !important;
+    color: #6b21a8 !important;
+  }
+
+  .bg-green-100.dark\:bg-green-950,
+  [class*="bg-green"] {
+    background: #d1fae5 !important;
+    color: #065f46 !important;
+  }
+
+  .bg-orange-100.dark\:bg-orange-950,
+  [class*="bg-orange"] {
+    background: #fed7aa !important;
+    color: #9a3412 !important;
+  }
+
+  .bg-indigo-100.dark\:bg-indigo-950 {
+    background: #e0e7ff !important;
+    color: #3730a3 !important;
+  }
+
+  .bg-red-100.dark\:bg-red-950 {
+    background: #fee2e2 !important;
+    color: #991b1b !important;
+  }
+
+  /* Ensure borders and important highlights are visible */
+  .border-l-4 {
+    border-left-width: 4px !important;
+  }
+
+  .border-red-500 {
+    border-left-color: #ef4444 !important;
+  }
+
+  .border-blue-500 {
+    border-left-color: #3b82f6 !important;
+  }
+
+  .border-green-500 {
+    border-left-color: #22c55e !important;
+  }
+
+  .border-orange-500 {
+    border-left-color: #f97316 !important;
+  }
+
+  .border-2 {
+    border-width: 2px !important;
+  }
+
+  .border-red-600 {
+    border-color: #dc2626 !important;
+  }
+
+  .border-orange-600 {
+    border-color: #ea580c !important;
+  }
+
+  .border-purple-600 {
+    border-color: #9333ea !important;
+  }
+
+  .border-blue-600 {
+    border-color: #2563eb !important;
+  }
+
+  /* Text emphasis */
+  .font-bold,
+  strong {
+    font-weight: 700 !important;
+  }
+
+  /* Code blocks */
+  code {
+    background: #f3f4f6 !important;
+    border: 1px solid #d1d5db !important;
+    padding: 2px 4px !important;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace !important;
+  }
+
+  /* Footer for attribution */
+  .print-footer {
+    page-break-before: avoid;
+    break-before: avoid;
+    margin-top: 1rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid #000;
+  }
+
+  /* Optimize spacing */
+  .space-y-4 > * + * {
+    margin-top: 0.5rem !important;
+  }
+
+  .space-y-2 > * + * {
+    margin-top: 0.25rem !important;
+  }
+
+  /* Ensure text is legible */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Remove unnecessary padding/margins on page */
+  @page {
+    margin: 0.5in;
+    size: letter portrait;
+  }
+}
+
+/* Screen view styles */
+@media screen {
+  .reference-cards-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .print-footer {
+    display: none;
+  }
+}
