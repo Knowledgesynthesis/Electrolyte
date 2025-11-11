@@ -19,7 +19,9 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
     --warning: 38 92% 50%;
-    --warning-foreground: 48 96% 89%;
+    --warning-foreground: 30 70% 20%;
+    --warning-background: 48 96% 90%;
+    --destructive-background: 0 84% 95%;
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 221.2 83.2% 53.3%;
@@ -41,10 +43,12 @@
     --muted-foreground: 215 20.2% 65.1%;
     --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 62.8% 60%;
     --destructive-foreground: 210 40% 98%;
     --warning: 38 92% 50%;
-    --warning-foreground: 222.2 84% 4.9%;
+    --warning-foreground: 48 96% 95%;
+    --warning-background: 38 80% 20%;
+    --destructive-background: 0 60% 25%;
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 224.3 76.3% 48%;
@@ -100,7 +104,8 @@
 }
 
 .safety-warning {
-  background-color: hsl(var(--warning) / 0.1);
+  background-color: hsl(var(--warning-background));
+  border: 1px solid hsl(var(--warning));
   border-left: 4px solid hsl(var(--warning));
   color: hsl(var(--warning-foreground));
   border-radius: 0.375rem;
@@ -108,7 +113,8 @@
 }
 
 .emergency-alert {
-  background-color: hsl(var(--destructive) / 0.1);
+  background-color: hsl(var(--destructive-background));
+  border: 1px solid hsl(var(--destructive));
   border-left: 4px solid hsl(var(--destructive));
   color: hsl(var(--destructive-foreground));
   border-radius: 0.375rem;

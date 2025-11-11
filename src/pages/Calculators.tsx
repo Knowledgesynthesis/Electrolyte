@@ -25,7 +25,6 @@ export default function Calculators() {
       path: '/calculators/calcium-correction',
       icon: Activity,
       electrolyte: 'Calcium',
-      comingSoon: true,
     },
     {
       name: 'Magnesium Replacement Calculator',
