@@ -106,9 +106,10 @@ export default function Layout() {
           <p className="text-sm text-muted-foreground text-center md:text-left">
             Built for medical education. Evidence-based. Clinically rigorous.
           </p>
-          <p className="text-sm text-muted-foreground">
-            © 2025 Electrolyte Atlas. Educational use only.
-          </p>
+          <div className="text-sm text-muted-foreground text-center">
+            <p>Made by <strong>Bashar Hasan MD</strong></p>
+            <p>© {new Date().getFullYear()} Electrolyte Atlas. Educational use only.</p>
+          </div>
         </div>
       </footer>
     </div>
