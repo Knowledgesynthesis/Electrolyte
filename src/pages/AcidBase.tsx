@@ -36,8 +36,155 @@ export default function AcidBase() {
             pH is determined by the ratio of <strong>bicarbonate (HCO₃⁻)</strong> (metabolic component) to
             <strong> pCO₂</strong> (respiratory component). Disorders arise when one or both components change.
           </p>
+          <p className="text-sm mt-3">
+            <strong>Important:</strong> Acid-base balance and electrolyte homeostasis are intimately connected.
+            pH changes affect electrolyte distribution (especially K⁺ and Ca²⁺), while electrolyte disorders
+            can cause or contribute to acid-base disturbances.
+          </p>
         </CardContent>
       </Card>
+
+      {/* Foundational Electrolyte-pH Interactions */}
+      <div className="mb-8">
+        <h2 className="text-2xl font-bold mb-4">Foundational Concepts: Electrolyte-pH Interactions</h2>
+        <p className="text-muted-foreground mb-6">
+          Before diving into systematic acid-base analysis, understand these critical bidirectional relationships:
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          {/* K+ <-> pH: Acidosis -> Hyperkalemia */}
+          <Card className="border-l-4 border-red-500">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <TrendingDown className="w-5 h-5 text-red-600" />
+                Acidosis → Hyperkalemia
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <div>
+                <p className="text-sm font-semibold mb-1">Mechanism:</p>
+                <p className="text-sm">
+                  In acidosis, H⁺ enters cells in exchange for K⁺ to buffer the pH.
+                  Result: <strong>Intracellular K⁺ shifts to extracellular space</strong>
+                </p>
+              </div>
+              <div className="bg-destructive/10 border border-destructive/20 rounded p-3">
+                <p className="text-sm font-semibold mb-1">Clinical Rule:</p>
+                <p className="text-sm">
+                  For every <strong>0.1 decrease</strong> in pH, serum K⁺ increases by <strong>~0.6 mEq/L</strong>
+                </p>
+              </div>
+              <div>
+                <p className="text-sm font-semibold mb-1">Example:</p>
+                <p className="text-sm">
+                  DKA patient with pH 7.1 (normal 7.4) → 0.3 pH drop → Expect K⁺ elevation of ~1.8 mEq/L
+                  above true total body K⁺
+                </p>
+              </div>
+              <div className="safety-warning">
+                <p className="text-sm">
+                  <strong>⚠️ Critical:</strong> "Normal" K⁺ in severe acidosis often masks total body K⁺ depletion.
+                  As acidosis corrects with treatment, K⁺ will drop precipitously. Start K⁺ repletion early.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* K+ <-> pH: Alkalosis -> Hypokalemia */}
+          <Card className="border-l-4 border-blue-500">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <TrendingUp className="w-5 h-5 text-blue-600" />
+                Alkalosis → Hypokalemia
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <div>
+                <p className="text-sm font-semibold mb-1">Mechanism:</p>
+                <p className="text-sm">
+                  In alkalosis, K⁺ enters cells in exchange for H⁺ released to compensate for high pH.
+                  Result: <strong>K⁺ shifts from extracellular to intracellular space</strong>
+                </p>
+              </div>
+              <div className="bg-primary/10 border border-primary/20 rounded p-3">
+                <p className="text-sm font-semibold mb-1">Clinical Rule:</p>
+                <p className="text-sm">
+                  For every <strong>0.1 increase</strong> in pH, serum K⁺ decreases by <strong>~0.4 mEq/L</strong>
+                </p>
+              </div>
+              <div>
+                <p className="text-sm font-semibold mb-1">Example:</p>
+                <p className="text-sm">
+                  Patient hyperventilating (pH 7.6) → 0.2 pH rise → Expect K⁺ drop of ~0.8 mEq/L
+                </p>
+              </div>
+              <div className="safety-warning">
+                <p className="text-sm">
+                  <strong>⚠️ Note:</strong> Contraction alkalosis (from volume depletion) often coexists with
+                  hypokalemia from renal losses → <strong>severe combined hypokalemia</strong>
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Ca2+ <-> pH */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <Card className="border-l-4 border-orange-500">
+            <CardHeader>
+              <CardTitle>Alkalosis → ↓ Ionized Ca²⁺</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <div>
+                <p className="text-sm font-semibold mb-1">Mechanism:</p>
+                <p className="text-sm">
+                  Alkalosis increases negative charge on albumin → More Ca²⁺ binds to albumin →
+                  <strong> Ionized (free) Ca²⁺ decreases</strong>
+                </p>
+              </div>
+              <div className="bg-destructive/10 border border-destructive/20 rounded p-3">
+                <p className="text-sm font-semibold mb-1">Clinical Significance:</p>
+                <p className="text-sm">
+                  Acute hyperventilation (respiratory alkalosis) can cause symptomatic hypocalcemia
+                  (tetany, perioral numbness, carpopedal spasm) even with normal total calcium
+                </p>
+              </div>
+              <div>
+                <p className="text-sm">
+                  <strong>Classic scenario:</strong> Panic attack → Hyperventilation → pH 7.6 → Hand/foot spasms
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-l-4 border-green-500">
+            <CardHeader>
+              <CardTitle>Acidosis → ↑ Ionized Ca²⁺</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <div>
+                <p className="text-sm font-semibold mb-1">Mechanism:</p>
+                <p className="text-sm">
+                  Acidosis decreases negative charge on albumin → Less Ca²⁺ binds to albumin →
+                  <strong> Ionized (free) Ca²⁺ increases</strong>
+                </p>
+              </div>
+              <div className="bg-primary/10 border border-primary/20 rounded p-3">
+                <p className="text-sm font-semibold mb-1">Clinical Significance:</p>
+                <p className="text-sm">
+                  Patients with acidosis may not show symptoms of hypocalcemia despite low total calcium
+                  because ionized Ca²⁺ is relatively preserved
+                </p>
+              </div>
+              <div>
+                <p className="text-sm">
+                  <strong>Clinical pearl:</strong> Always check ionized Ca²⁺ in critically ill patients with acid-base disorders
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
 
       {/* Step-by-Step Diagnostic Algorithm */}
       <Card className="mb-8">
@@ -548,39 +695,6 @@ export default function AcidBase() {
         </CardContent>
       </Card>
 
-      {/* Electrolyte Connections */}
-      <div className="mb-8">
-        <h2 className="text-2xl font-bold mb-4">Acid-Base & Electrolyte Connections</h2>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          <Card className="border-l-4 border-red-500">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <AlertTriangle className="w-5 h-5 text-red-600" />
-                Potassium ↔ pH
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3 text-sm">
-              <p><strong>Acidosis → Hyperkalemia:</strong> H⁺ in, K⁺ out. For every 0.1 pH ↓, K⁺ ↑ 0.6 mEq/L</p>
-              <p><strong>Alkalosis → Hypokalemia:</strong> K⁺ in, H⁺ out. For every 0.1 pH ↑, K⁺ ↓ 0.4 mEq/L</p>
-              <div className="safety-warning">
-                <p className="text-xs"><strong>⚠️ DKA Alert:</strong> "Normal" K⁺ in severe acidosis = total body K⁺ depletion. Start K⁺ repletion early.</p>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="border-l-4 border-blue-500">
-            <CardHeader>
-              <CardTitle>Calcium ↔ pH</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3 text-sm">
-              <p><strong>Alkalosis → ↓ Ionized Ca²⁺:</strong> More Ca²⁺ binds to albumin. Can cause tetany even with normal total Ca²⁺.</p>
-              <p><strong>Acidosis → ↑ Ionized Ca²⁺:</strong> Less Ca²⁺ binds to albumin. May not show hypocalcemia symptoms despite low total Ca²⁺.</p>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-
       {/* Clinical Examples */}
       <Card className="mb-8">
         <CardHeader>
@@ -696,6 +810,21 @@ export default function AcidBase() {
                 </tr>
               </tbody>
             </table>
+          </div>
+          <div className="mt-4 bg-muted p-4 rounded text-xs">
+            <p className="font-semibold mb-2">Formula Names & Mnemonics:</p>
+            <ul className="space-y-1 ml-4 list-disc">
+              <li><strong>Winter's Formula:</strong> The well-known eponym for metabolic acidosis compensation (named after Dr. Robert W. Winter, 1965)</li>
+              <li><strong>"1-3-4 Rule":</strong> A common mnemonic for respiratory compensation:
+                <ul className="ml-4 mt-1">
+                  <li>• <strong>1</strong> mEq HCO₃⁻ change per 10 mmHg pCO₂ (acute respiratory acidosis)</li>
+                  <li>• <strong>3.5</strong> mEq HCO₃⁻ change per 10 mmHg pCO₂ (chronic respiratory acidosis)</li>
+                  <li>• <strong>2</strong> mEq HCO₃⁻ change per 10 mmHg pCO₂ (acute respiratory alkalosis)</li>
+                  <li>• <strong>4</strong> mEq HCO₃⁻ change per 10 mmHg pCO₂ (chronic respiratory alkalosis)</li>
+                </ul>
+              </li>
+              <li>The metabolic alkalosis formula doesn't have a widely recognized eponym but is a standard compensation rule</li>
+            </ul>
           </div>
         </CardContent>
       </Card>
