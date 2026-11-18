@@ -1,114 +1,82 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import { useEffect } from 'react'
-import Layout from './components/Layout'
-import Home from './pages/Home'
-import Sodium from './pages/Sodium'
-import Potassium from './pages/Potassium'
-import Calcium from './pages/Calcium'
-import Magnesium from './pages/Magnesium'
-import Calculators from './pages/Calculators'
-import Cases from './pages/Cases'
-import Interactions from './pages/Interactions'
-import Assessments from './pages/Assessments'
-import Settings from './pages/Settings'
-import Dashboard from './pages/Dashboard'
-import AcidBase from './pages/AcidBase'
-import Algorithms from './pages/Algorithms'
-import ReferenceCards from './pages/ReferenceCards'
-import SodiumCorrection from './pages/calculators/SodiumCorrection'
-import CalciumCorrection from './pages/calculators/CalciumCorrection'
-import PotassiumECG from './pages/calculators/PotassiumECG'
-import MagnesiumReplacement from './pages/calculators/MagnesiumReplacement'
-// Sodium sub-pages
-import SodiumPhysiology from './pages/sodium/Physiology'
-import Hyponatremia from './pages/sodium/Hyponatremia'
-import Hypernatremia from './pages/sodium/Hypernatremia'
-// Potassium sub-pages
-import PotassiumPhysiology from './pages/potassium/Physiology'
-import Hypokalemia from './pages/potassium/Hypokalemia'
-import Hyperkalemia from './pages/potassium/Hyperkalemia'
-// Calcium sub-pages
-import CalciumPhysiology from './pages/calcium/Physiology'
-import Hypocalcemia from './pages/calcium/Hypocalcemia'
-import Hypercalcemia from './pages/calcium/Hypercalcemia'
-// Magnesium sub-pages
-import MagnesiumPhysiology from './pages/magnesium/Physiology'
-import Hypomagnesemia from './pages/magnesium/Hypomagnesemia'
-import Hypermagnesemia from './pages/magnesium/Hypermagnesemia'
-import { useTheme } from './stores/theme'
+import { lazy } from 'react'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { AppShell } from './components/AppShell'
 
-function App() {
-  const { theme } = useTheme()
+const Home = lazy(() => import('./pages/Home'))
+const Learn = lazy(() => import('./pages/Learn'))
+const LessonPage = lazy(() => import('./pages/LessonPage'))
+const ToolsPage = lazy(() => import('./pages/ToolsPage'))
+const ToolPage = lazy(() => import('./pages/ToolPage'))
+const AlgorithmsPage = lazy(() => import('./pages/AlgorithmsPage'))
+const AlgorithmPage = lazy(() => import('./pages/AlgorithmPage'))
+const CasesPage = lazy(() => import('./pages/CasesPage'))
+const CasePage = lazy(() => import('./pages/CasePage'))
+const Practice = lazy(() => import('./pages/Practice'))
+const Review = lazy(() => import('./pages/Review'))
+const ProgressPage = lazy(() => import('./pages/ProgressPage'))
+const Reference = lazy(() => import('./pages/Reference'))
+const Glossary = lazy(() => import('./pages/Glossary'))
+const Evidence = lazy(() => import('./pages/Evidence'))
+const SettingsPage = lazy(() => import('./pages/SettingsPage'))
+const NotFound = lazy(() => import('./pages/NotFound'))
 
-  // Initialize theme on mount
-  useEffect(() => {
-    const root = window.document.documentElement
-    root.classList.remove('light', 'dark')
+/** Old URLs from the previous version keep working */
+const LEGACY: [string, string][] = [
+  ['sodium', '/learn#sodium'],
+  ['sodium/physiology', '/learn/water-balance'],
+  ['sodium/hyponatremia', '/learn/hyponatremia-diagnosis'],
+  ['sodium/hypernatremia', '/learn/hypernatremia'],
+  ['potassium', '/learn#potassium'],
+  ['potassium/physiology', '/learn/potassium-physiology'],
+  ['potassium/hypokalemia', '/learn/hypokalemia'],
+  ['potassium/hyperkalemia', '/learn/hyperkalemia'],
+  ['calcium', '/learn#calcium'],
+  ['calcium/physiology', '/learn/calcium-physiology'],
+  ['calcium/hypocalcemia', '/learn/hypocalcemia'],
+  ['calcium/hypercalcemia', '/learn/hypercalcemia'],
+  ['magnesium', '/learn#magnesium'],
+  ['magnesium/physiology', '/learn/hypomagnesemia'],
+  ['magnesium/hypomagnesemia', '/learn/hypomagnesemia'],
+  ['magnesium/hypermagnesemia', '/learn/hypermagnesemia'],
+  ['calculators', '/tools'],
+  ['calculators/sodium-correction', '/tools/na-planner'],
+  ['calculators/calcium-correction', '/tools/ca-adjust'],
+  ['calculators/potassium-ecg', '/tools/k-ecg'],
+  ['calculators/magnesium-replacement', '/tools/mg-planner'],
+  ['interactions', '/learn/interactions'],
+  ['acid-base', '/learn/acid-base-approach'],
+  ['reference-cards', '/reference'],
+  ['assessments', '/practice'],
+  ['dashboard', '/progress'],
+]
 
-    if (theme === 'system') {
-      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
-        ? 'dark'
-        : 'light'
-      root.classList.add(systemTheme)
-    } else {
-      root.classList.add(theme)
-    }
-  }, [theme])
-
+export default function App() {
   return (
-    <Router>
+    <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Layout />}>
+        <Route element={<AppShell />}>
           <Route index element={<Home />} />
-
-          {/* Electrolyte Modules */}
-          <Route path="sodium" element={<Sodium />} />
-          <Route path="sodium/physiology" element={<SodiumPhysiology />} />
-          <Route path="sodium/hyponatremia" element={<Hyponatremia />} />
-          <Route path="sodium/hypernatremia" element={<Hypernatremia />} />
-
-          <Route path="potassium" element={<Potassium />} />
-          <Route path="potassium/physiology" element={<PotassiumPhysiology />} />
-          <Route path="potassium/hypokalemia" element={<Hypokalemia />} />
-          <Route path="potassium/hyperkalemia" element={<Hyperkalemia />} />
-
-          <Route path="calcium" element={<Calcium />} />
-          <Route path="calcium/physiology" element={<CalciumPhysiology />} />
-          <Route path="calcium/hypocalcemia" element={<Hypocalcemia />} />
-          <Route path="calcium/hypercalcemia" element={<Hypercalcemia />} />
-
-          <Route path="magnesium" element={<Magnesium />} />
-          <Route path="magnesium/physiology" element={<MagnesiumPhysiology />} />
-          <Route path="magnesium/hypomagnesemia" element={<Hypomagnesemia />} />
-          <Route path="magnesium/hypermagnesemia" element={<Hypermagnesemia />} />
-
-          {/* Calculators */}
-          <Route path="calculators" element={<Calculators />} />
-          <Route path="calculators/sodium-correction" element={<SodiumCorrection />} />
-          <Route path="calculators/calcium-correction" element={<CalciumCorrection />} />
-          <Route path="calculators/potassium-ecg" element={<PotassiumECG />} />
-          <Route path="calculators/magnesium-replacement" element={<MagnesiumReplacement />} />
-
-          {/* Cases, Interactions & Assessments */}
-          <Route path="cases" element={<Cases />} />
-          <Route path="interactions" element={<Interactions />} />
-          <Route path="acid-base" element={<AcidBase />} />
-          <Route path="algorithms" element={<Algorithms />} />
-          <Route path="reference-cards" element={<ReferenceCards />} />
-          <Route path="assessments" element={<Assessments />} />
-
-          {/* Dashboard */}
-          <Route path="dashboard" element={<Dashboard />} />
-
-          {/* Settings */}
-          <Route path="settings" element={<Settings />} />
-
-          {/* 404 - Redirect to home */}
-          <Route path="*" element={<Home />} />
+          <Route path="learn" element={<Learn />} />
+          <Route path="learn/:lessonId" element={<LessonPage />} />
+          <Route path="tools" element={<ToolsPage />} />
+          <Route path="tools/:toolId" element={<ToolPage />} />
+          <Route path="algorithms" element={<AlgorithmsPage />} />
+          <Route path="algorithms/:algoId" element={<AlgorithmPage />} />
+          <Route path="cases" element={<CasesPage />} />
+          <Route path="cases/:caseId" element={<CasePage />} />
+          <Route path="practice" element={<Practice />} />
+          <Route path="review" element={<Review />} />
+          <Route path="progress" element={<ProgressPage />} />
+          <Route path="reference" element={<Reference />} />
+          <Route path="glossary" element={<Glossary />} />
+          <Route path="evidence" element={<Evidence />} />
+          <Route path="settings" element={<SettingsPage />} />
+          {LEGACY.map(([from, to]) => (
+            <Route key={from} path={from} element={<Navigate to={to} replace />} />
+          ))}
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
-    </Router>
+    </BrowserRouter>
   )
 }
-
-export default App

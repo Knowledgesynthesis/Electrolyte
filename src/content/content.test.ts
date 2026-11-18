@@ -151,7 +151,7 @@ describe('contradiction check (single source of truth)', () => {
   const text = corpus()
 
   it('sodium correction ceilings quoted anywhere match the constants', () => {
-    const allowed = new Set([NA_HYPO.limit24h, NA_HYPO.limitHighRisk24h, NA_HYPO.limit48h])
+    const allowed = new Set<number>([NA_HYPO.limit24h, NA_HYPO.limitHighRisk24h, NA_HYPO.limit48h])
     const re = /≤\s*(\d+)\s*mmol\/L(?:\/24 h| in (?:any )?24 h| per 24 h| in 48 h)/g
     for (const m of text.matchAll(re)) expect(allowed.has(Number(m[1])), m[0]).toBe(true)
   })
