@@ -1,82 +1,55 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import type { UnitSystem, AppSettings } from '@/types'
+import type { UnitSystem } from '@/lib/clinical/units'
 
-interface SettingsState extends AppSettings {
-  setUnitSystem: (system: UnitSystem) => void
-  setFontSize: (size: 'small' | 'medium' | 'large') => void
-  toggleAccessibilityMode: () => void
-  setOfflineMode: (enabled: boolean) => void
-  updateLastSync: () => void
-  resetSettings: () => void
-}
+export type Theme = 'light' | 'dark' | 'system'
 
-const defaultSettings: AppSettings = {
-  unitSystem: 'SI', // Default to SI units (mmol/L)
-  theme: 'dark',
-  fontSize: 'medium',
-  accessibilityMode: false,
-  offlineMode: true,
+interface SettingsState {
+  theme: Theme
+  units: UnitSystem
+  setTheme: (t: Theme) => void
+  setUnits: (u: UnitSystem) => void
 }
 
 export const useSettings = create<SettingsState>()(
   persist(
     (set) => ({
-      ...defaultSettings,
-
-      setUnitSystem: (system: UnitSystem) => {
-        set({ unitSystem: system })
+      theme: 'dark',
+      units: 'conventional',
+      setTheme: (theme) => {
+        set({ theme })
+        applyTheme(theme)
       },
-
-      setFontSize: (size: 'small' | 'medium' | 'large') => {
-        set({ fontSize: size })
-        applyFontSize(size)
-      },
-
-      toggleAccessibilityMode: () => {
-        set((state) => ({ accessibilityMode: !state.accessibilityMode }))
-      },
-
-      setOfflineMode: (enabled: boolean) => {
-        set({ offlineMode: enabled })
-      },
-
-      updateLastSync: () => {
-        set({ lastSync: new Date() })
-      },
-
-      resetSettings: () => {
-        set(defaultSettings)
-        applyFontSize('medium')
-      },
+      setUnits: (units) => set({ units }),
     }),
     {
-      name: 'electrolyte-settings',
-      onRehydrateStorage: () => (state) => {
-        if (state) {
-          applyFontSize(state.fontSize)
-        }
+      name: 'ea-settings',
+      version: 2,
+      migrate: (state) => {
+        const s = (state ?? {}) as Partial<SettingsState> & { unitSystem?: string }
+        return { theme: s.theme ?? 'dark', units: s.units ?? 'conventional' } as SettingsState
       },
-    }
-  )
+      onRehydrateStorage: () => (state) => applyTheme(state?.theme ?? 'dark'),
+    },
+  ),
 )
 
-function applyFontSize(size: 'small' | 'medium' | 'large') {
-  const root = window.document.documentElement
+export function resolvedTheme(theme: Theme): 'light' | 'dark' {
+  if (theme !== 'system') return theme
+  return typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+}
 
-  // Remove existing font size classes
-  root.classList.remove('text-sm', 'text-base', 'text-lg')
+export function applyTheme(theme: Theme) {
+  if (typeof document === 'undefined') return
+  const root = document.documentElement
+  const t = resolvedTheme(theme)
+  root.classList.toggle('dark', t === 'dark')
+  root.style.colorScheme = t
+  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', t === 'dark' ? '#14161f' : '#f8f9fb')
+}
 
-  // Apply new font size
-  switch (size) {
-    case 'small':
-      root.style.fontSize = '14px'
-      break
-    case 'medium':
-      root.style.fontSize = '16px'
-      break
-    case 'large':
-      root.style.fontSize = '18px'
-      break
-  }
+if (typeof window !== 'undefined') {
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+    if (useSettings.getState().theme === 'system') applyTheme('system')
+  })
 }

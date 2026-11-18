@@ -1,199 +1,76 @@
 # Electrolyte Atlas
 
-**Navigate Na⁺ to Ca²⁺ with confidence**
+Interactive, evidence-based mastery of sodium/water, potassium, calcium, magnesium, phosphate and acid–base disorders — from physiology to bedside decisions.
 
-A comprehensive, evidence-based educational platform for mastering electrolyte physiology and disorders. Built for medical professionals from students to attending physicians.
+**22 lessons · 13 interactive tools · 8 decision-tree algorithms · 8 branching cases · 60 explained questions · 57 flashcards with spaced repetition · 81 verified references** (evidence reviewed November 2026).
 
-## 🎯 Features
+## How it teaches
 
-### Current (M0 Prototype)
-- **Sodium (Na⁺) Module**: Comprehensive overview with hypo/hypernatremia information
-- **Potassium (K⁺) Module**: Complete guide with ECG correlations and emergency protocols
-- **Sodium Correction Calculator**:
-  - Real-time calculation with safety guardrails
-  - Osmotic demyelination syndrome warnings
-  - Age and sex-adjusted total body water calculations
-  - Infusion recommendations
-- **Interactive UI**: Dark mode, responsive design, accessibility features
-- **PWA Support**: Install as app, works offline
-- **Unit System Toggle**: Switch between SI (mmol/L) and US (mEq/L) units
+| Step | Where | What happens |
+| --- | --- | --- |
+| Learn | `/learn` | Short lessons: physiology → diagnosis → treatment. Every threshold carries a citation; "Updated practice", "Debated" and "Pitfall" callouts flag what has changed and where evidence is uncertain. |
+| Apply | inside lessons, `/tools` | Live models (fluid distribution, nephron map, brain-cell adaptation, ECG vs K⁺) and calculators that show their working. |
+| Decide | `/algorithms`, `/cases` | Click-through work-ups and branching cases graded best / acceptable / harmful. |
+| Retain | `/practice`, `/review` | Vignette questions with an explanation for every option; SM-2 spaced repetition of missed questions and flashcards; per-module mastery in `/progress`. |
 
-### Coming Soon
-- Calcium (Ca²⁺) and Magnesium (Mg²⁺) modules
-- Potassium ECG Visualizer
-- Calcium Albumin Corrector
-- Interactive case vignettes
-- Knowledge assessments with detailed rationales
-- Diagnostic flowcharts
-- Spaced repetition learning system
+Everything runs offline once loaded (PWA). Progress stays in the browser and can be exported/imported in Settings.
 
-## 🚀 Quick Start
+## Evidence policy
 
-### Prerequisites
-- Node.js 18+
-- npm or yarn
+- **Single source of truth.** Every clinical number (correction limits, doses, cut-offs) lives in [`src/lib/clinical/constants.ts`](src/lib/clinical/constants.ts) and is interpolated into lessons, tools, algorithms, flashcards and reference cards.
+- **Automated contradiction check.** [`src/content/content.test.ts`](src/content/content.test.ts) fails the build if any sodium ceiling quoted anywhere differs from the constants, if a known-outdated claim reappears (SIADH urine Na > 20, TTKG, Ca×P product targets, SGLT2i causing hypomagnesemia, a non-existent KDIGO hyponatremia guideline), or if any citation, embedded question, tool, case path or algorithm branch is broken.
+- **Current guidance included**, e.g. UKKA hyperkalaemia guideline (2023, updated 2026), ERC 2025 and AHA 2025 resuscitation guidance, 2024 ADA/EASD hyperglycemic-crises consensus, Endocrine Society hypercalcemia-of-malignancy (2023) and primary aldosteronism (2025) guidelines, Fifth International Workshop on PHPT (2022), AVP-deficiency/resistance nomenclature (2022), copeptin testing, FDA denosumab boxed warning (2024), palopegteriparatide (2024), and the 2023–2025 observational data on correction speed (labelled as debated, guideline limits retained).
 
-### Installation
+### Corrections made to the previous version
+
+| Previous claim | Now |
+| --- | --- |
+| SIADH requires urine Na > 20; "KDIGO 2021" cited for Na limits | Urine Na > 30 (European 2014); KDIGO has no hyponatremia guideline — citation removed |
+| Hyponatremia "4–6 mmol/L/24 h is safer" | Goal 4–8 (4–6 if high risk); limit ≤ 10 (≤ 8 high risk) per US 2013/EU 2014; 2025 meta-analysis shown as debated |
+| Sodium calculator: 3% saline suggested for any Na < 135; default target tripped its own limit | Symptom-driven bolus logic, ODS-risk limits, Adrogué–Madias + mass-balance simulation of aquaresis |
+| TTKG for hypokalemia | Retired by its originators → urine K/creatinine ratio |
+| "0.6 mmol/L K per 0.1 pH" (and 0.4 elsewhere — internally inconsistent) | Effect variable and mainly in mineral acidosis; no fixed correction |
+| Calcium "stone heart" with digoxin | Not supported by modern data; calcium is probably safe |
+| Hyperkalemia: routine bicarbonate; Kayexalate as an option | Not routine (ERC 2025); SZC preferred; resins have no acute role |
+| Furosemide in hypercalcemia; denosumab "weekly × 4" | No routine loop diuretic; denosumab suggested over bisphosphonate (2023) |
+| Ca × PO₄ > 55 target | KDIGO 2017 no longer uses the product |
+| SGLT2 inhibitors cause Mg wasting | They slightly raise serum Mg |
+| Mg 1.5–2.5 mg/dL "= 0.7–1.1 mmol/L" (conversion error) | 1.7–2.4 mg/dL = 0.70–1.0 mmol/L |
+| Mg for refractory VF | Not recommended routinely (AHA 2025); torsades only |
+| Central/nephrogenic DI, water deprivation test | AVP-D / AVP-R; copeptin-based tests |
+| Several fabricated or mis-cited references | Every reference re-verified; DOI or PubMed link provided |
+
+Functional bugs also fixed: Tailwind v4 theme tokens generated no CSS (cards/borders unstyled), PWA icons were missing, mastery and assessment scores were never saved, the unit toggle had no effect.
+
+## Development
 
 ```bash
-# Install dependencies
 npm install
-
-# Start development server
-npm run dev
-
-# Build for production
-npm run build
-
-# Preview production build
-npm run preview
+npm run dev        # http://localhost:5173
+npm test           # unit, stress, content-integrity and contradiction tests (Vitest)
+npm run lint
+npm run build      # type-check + production build (PWA)
+node scripts/smoke.mjs http://localhost:4173   # Playwright smoke test of every route at desktop and phone width (after `npx vite preview --port 4173`)
+npm run icons      # regenerate PWA icons from public/favicon.svg
 ```
 
-The app will be available at `http://localhost:5173`
-
-## 🏗️ Tech Stack
-
-- **Framework**: React 18 + TypeScript
-- **Build Tool**: Vite
-- **Styling**: Tailwind CSS v4
-- **State Management**: Zustand
-- **Routing**: React Router v6
-- **PWA**: vite-plugin-pwa with Workbox
-- **Icons**: Lucide React
-- **Charts**: Recharts
-- **Math Rendering**: KaTeX
-
-## 📁 Project Structure
+## Architecture
 
 ```
-app/
-├── src/
-│   ├── components/       # Reusable UI components
-│   │   ├── ui/          # Base components (Button, Card, Input)
-│   │   └── Layout.tsx   # Main app layout
-│   ├── pages/           # Route pages
-│   │   ├── Home.tsx
-│   │   ├── Sodium.tsx
-│   │   ├── Potassium.tsx
-│   │   ├── Calculators.tsx
-│   │   ├── Settings.tsx
-│   │   └── calculators/
-│   │       └── SodiumCorrection.tsx
-│   ├── stores/          # Zustand state stores
-│   │   ├── theme.ts     # Theme management
-│   │   ├── settings.ts  # User settings
-│   │   └── progress.ts  # Learning progress
-│   ├── types/           # TypeScript definitions
-│   ├── lib/             # Utility functions
-│   ├── App.tsx          # Main app component
-│   └── main.tsx         # Entry point
-├── public/              # Static assets
-└── dist/                # Production build output
+src/
+  lib/clinical/      Pure, tested clinical math (sodium, potassium, calcium, magnesium, acid–base, urine, ECG synthesis, units)
+  content/           Typed lesson blocks, questions, cases, algorithms, flashcards, glossary, evidence updates, references
+  components/        Block renderer, tools/, figures/, question card, charts, app shell, command palette (⌘K)
+  pages/             Route-level views (lazy-loaded)
+  stores/            Zustand: settings (theme, units) and progress (lessons, attempts, SRS, cases)
 ```
 
-## 🎨 Design Philosophy
+React 19 · TypeScript · Vite 7 · Tailwind CSS 4 · Zustand · React Router 7 · vite-plugin-pwa · Vitest.
 
-Built according to the **ultrathink.md** principles:
-- **Elegant Architecture**: Every component serves a purpose
-- **Clinical Accuracy**: Evidence-based with proper citations
-- **Safety First**: Prominent warnings and guardrails
-- **User-Centric**: Intuitive, accessible, mobile-first
-- **Performance**: Optimized for speed and offline use
+## Deployment
 
-## 🏥 Medical Accuracy
-
-All content is based on current clinical guidelines:
-- UpToDate (2023)
-- KDIGO Guidelines
-- Harrison's Principles of Internal Medicine (21st Ed)
-- Endocrine Society Guidelines
-- NEJM Clinical Practice Reviews
-
-### Safety Warnings
-- Sodium correction limits: ≤ 8-10 mmol/L per 24 hours
-- Hyperkalemia emergency protocols clearly marked
-- All calculators include validation and safety checks
-
-## 🎓 Educational Use Only
-
-**Important**: This application is designed for educational purposes only. It should not replace clinical judgment, established treatment protocols, or consultation with senior clinicians. Always verify calculations independently and follow current institutional guidelines.
-
-## 🌐 Deployment
-
-### Build & Deploy
-```bash
-# Production build
-npm run build
-
-# The dist/ folder contains:
-# - Optimized JS/CSS bundles
-# - Service worker for offline support
-# - PWA manifest
-# - All assets
-```
-
-Deploy to:
-- Vercel: `vercel deploy`
-- Netlify: `netlify deploy`
-- GitHub Pages: Build and push `dist/` folder
-
-### PWA Installation
-Once deployed, users can install the app:
-- **Desktop**: Chrome/Edge - Click install icon in address bar
-- **iOS**: Safari - Share → Add to Home Screen
-- **Android**: Chrome - Menu → Install App
-
-## 🛠️ Development
-
-### Available Scripts
-- `npm run dev` - Start dev server with HMR
-- `npm run build` - Production build
-- `npm run preview` - Preview production build
-- `npm run lint` - Run ESLint
-
-### Adding New Features
-1. Create components in `src/components/` or `src/pages/`
-2. Add types to `src/types/index.ts`
-3. Update routing in `src/App.tsx`
-4. Add utilities to `src/lib/utils.ts`
-
-## 📝 Future Roadmap
-
-### M1 (Next Phase)
-- [ ] Calcium and Magnesium modules
-- [ ] Potassium ECG Visualizer with interactive waveforms
-- [ ] Volume & Tonicity Navigator
-- [ ] Case vignette engine
-
-### M2 (Advanced Features)
-- [ ] Cross-electrolyte interaction maps
-- [ ] Acid-base integration
-- [ ] Advanced diagnostic algorithms
-- [ ] Spaced repetition system
-
-### M3 (Personalization)
-- [ ] User progress tracking
-- [ ] Adaptive learning paths
-- [ ] Printable reference cards
-- [ ] Multi-language support
-
-## 🤝 Contributing
-
-This is an educational project. Contributions welcome:
-1. Medical accuracy improvements
-2. New calculators/tools
-3. UI/UX enhancements
-4. Bug fixes
-
-## 📄 License
-
-Educational use. All medical content properly cited.
-
-## 🙏 Acknowledgments
-
-Built with clinical rigor and attention to detail, following evidence-based medicine principles. Special thanks to the medical education community for their continuous work in making medicine accessible and understandable.
+Pushed to `main` → Vercel builds with `npm run build` and serves `dist/` with SPA rewrites (`vercel.json`).
 
 ---
 
-**Version**: 0.1.0 (M0 Prototype)
-**Last Updated**: November 2025
+Made by **Bashar Hasan MD**. Scope: adult medicine unless stated; doses reflect the cited sources as of November 2026 — local protocols and product labels take precedence.

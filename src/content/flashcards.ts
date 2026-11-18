@@ -1,0 +1,70 @@
+import { CA, HYPERK, K_IV, MG, NA_HYPER, NA_HYPO } from '@/lib/clinical/constants'
+import type { Flashcard, ModuleId } from './types'
+
+const f = (id: string, module: ModuleId, front: string, back: string): Flashcard => ({ id, module, front, back })
+
+export const FLASHCARDS: Flashcard[] = [
+  f('fc-tbw', 'foundations', 'TBW fraction: young man / young woman / older man / older woman', '0.6 / 0.5 / 0.5 / 0.45 × weight'),
+  f('fc-posm', 'foundations', 'Calculated serum osmolality (conventional units)', '2 × Na + glucose/18 + BUN/2.8'),
+  f('fc-edelman', 'foundations', 'Edelman: serum Na ≈ ?', '(exchangeable Na + exchangeable K) / TBW'),
+  f('fc-d5w', 'foundations', 'How much of 1 L D5W stays intravascular?', '≈80 mL (1/12): free water distributes across all compartments'),
+  f('fc-ns-composition', 'foundations', 'Na content: 0.9% NaCl, LR, Plasma-Lyte, 0.45% NaCl, 3% NaCl', '154, 130, 140, 77, 513 mmol/L'),
+  f('fc-loop-thiazide', 'foundations', 'Loop vs thiazide: urinary calcium?', 'Loop ↑ (calciuria); thiazide ↓ (hypocalciuria)'),
+
+  f('fc-na-limit', 'sodium', 'Hyponatremia correction limits (chronic)', `≤${NA_HYPO.limit24h} mmol/L in any 24 h (≤${NA_HYPO.limitHighRisk24h} if high ODS risk); ≤${NA_HYPO.limit48h} in 48 h`),
+  f('fc-na-goal', 'sodium', 'Hyponatremia 24 h goal', `${NA_HYPO.goalMin24h}–${NA_HYPO.goalMax24h} mmol/L (${NA_HYPO.goalMin24h}–6 if high risk)`),
+  f('fc-ods-risk', 'sodium', 'ODS risk factors', `Na ≤${NA_HYPO.highRiskNa}, hypokalemia, alcohol use disorder, malnutrition, advanced liver disease`),
+  f('fc-bolus', 'sodium', 'Severe symptomatic hyponatremia — first treatment', `3% NaCl ${NA_HYPO.bolusMl} mL over ${NA_HYPO.bolusMinutes} min, repeat ×${NA_HYPO.bolusMaxDoses}; target +${NA_HYPO.severeSymptomTarget}`),
+  f('fc-am', 'sodium', 'Adrogué–Madias formula', 'ΔNa per L = (infusate Na+K − serum Na)/(TBW + 1)'),
+  f('fc-siadh', 'sodium', 'SIADH essential criteria', 'Posm <275, Uosm >100, euvolemia, urine Na >30, normal thyroid & cortisol, no diuretics'),
+  f('fc-furst', 'sodium', 'Furst ratio >1 means…', 'Fluid restriction will fail: (UNa + UK)/PNa >1'),
+  f('fc-hillier', 'sodium', 'Glucose correction of Na (Hillier)', '+2.4 mmol/L per 100 mg/dL glucose above 100'),
+  f('fc-overcorrect', 'sodium', 'Commonest cause of overcorrection', 'Water diuresis after the ADH stimulus resolves'),
+  f('fc-rescue', 'sodium', 'Overcorrection rescue', 'Stop Na; D5W 10 mL/kg over 1 h; desmopressin 2 µg IV ≤ every 8 h'),
+  f('fc-fwd', 'sodium', 'Free water deficit', 'TBW × (Na/140 − 1)'),
+  f('fc-hyperna-rate', 'sodium', 'Hypernatremia correction rate', `Chronic ≈${NA_HYPER.chronicTarget24h} mmol/L/24 h; acute ≈${NA_HYPER.acuteMaxRatePerHour} mmol/L/h`),
+  f('fc-avp', 'sodium', 'What replaced "central" and "nephrogenic" diabetes insipidus (2022)?', 'AVP deficiency (AVP-D) / AVP resistance (AVP-R)'),
+  f('fc-copeptin', 'sodium', 'Hypertonic saline-stimulated copeptin cut-off', '>4.9 pmol/L → primary polydipsia (vs AVP-D)'),
+  f('fc-triphasic', 'sodium', 'Triphasic response after pituitary surgery', 'AVP-D → SIADH (days ~6–11) → permanent AVP-D'),
+
+  f('fc-k-shift-in', 'potassium', 'Shift K into cells', 'Insulin, β₂-agonists, alkalosis, refeeding, hypothermia'),
+  f('fc-ukcr', 'potassium', 'Urine K/Cr in hypokalemia: renal loss if…', '≥1.5 mmol/mmol (≈13 mEq/g). TTKG is obsolete.'),
+  f('fc-kiv', 'potassium', 'Max IV KCl rate peripheral / central', `${K_IV.peripheralMaxPerHour} / ${K_IV.centralMaxPerHour} mmol/h (${K_IV.centralEmergencyMaxPerHour} only if life-threatening with ECG)`),
+  f('fc-k-rule', 'potassium', '10 mmol KCl raises K by ≈?', `${K_IV.risePer10mmol} mmol/L (no shift, no ongoing loss)`),
+  f('fc-dka-k', 'potassium', 'DKA: K threshold to delay insulin / start replacement', '<3.5 delay insulin; start K once <5.0 (target 4–5)'),
+  f('fc-ca-hyperk', 'potassium', 'Hyperkalemia: calcium dose', '10% Ca gluconate 30 mL (6.8 mmol) over 10 min, or 10% CaCl₂ 10 mL'),
+  f('fc-insulin', 'potassium', 'Insulin–glucose for hyperkalemia', `${HYPERK.insulinUnits} U regular insulin + ${HYPERK.dextroseGrams} g dextrose; glucose checks for 6 h`),
+  f('fc-bicarb-k', 'potassium', 'Sodium bicarbonate for hyperkalemia?', 'Not routinely (ERC 2025) — only with severe metabolic acidosis'),
+  f('fc-k-recheck', 'potassium', 'Recheck K after emergency treatment', '1, 2, 4, 6 and 24 h'),
+  f('fc-tmp', 'potassium', 'Trimethoprim causes hyperkalemia by…', 'ENaC blockade (amiloride-like)'),
+
+  f('fc-ca-adj', 'calcium', 'Albumin-adjusted calcium (and its weakness)', 'Ca + 0.8 × (4 − albumin); poor agreement with ionized Ca — measure iCa'),
+  f('fc-ca-salts', 'calcium', 'Elemental Ca in 10 mL of 10% gluconate vs chloride', `${CA.gluconate10ml.mg} mg (${CA.gluconate10ml.mmol} mmol) vs ${CA.chloride10ml.mg} mg (${CA.chloride10ml.mmol} mmol)`),
+  f('fc-ca-iv', 'calcium', 'Indications for IV calcium in hypocalcemia', `Symptoms/QT prolongation or adjusted Ca <${CA.ivThresholdMmol} mmol/L`),
+  f('fc-fhh', 'calcium', 'Ca/Cr clearance ratio suggesting FHH', '<0.01'),
+  f('fc-hcm', 'calcium', 'Severe hypercalcemia of malignancy', 'Saline + calcitonin + denosumab (suggested) or zoledronate'),
+  f('fc-furo-ca', 'calcium', 'Furosemide for hypercalcemia?', 'Not routine — only for volume overload after rehydration'),
+  f('fc-phpt', 'calcium', 'PHPT surgery criteria (2022)', 'Ca >1 above ULN, T ≤−2.5/fracture, eGFR <60, stones, urine Ca >250 (F)/300 (M), age <50'),
+  f('fc-dmab', 'calcium', 'Denosumab boxed warning (2024)', 'Severe hypocalcemia in advanced CKD/dialysis, peak 2–5 weeks'),
+  f('fc-steroid-ca', 'calcium', 'Hypercalcemia that responds to glucocorticoids', 'Calcitriol-mediated: sarcoid, granulomatous, lymphoma'),
+
+  f('fc-mg-conv', 'magnesium', '1 g MgSO₄ = ?', `${MG.perGram.mmol} mmol = ${MG.perGram.meq} mEq = ${MG.perGram.mgElemental} mg elemental`),
+  f('fc-femg', 'magnesium', 'FEMg formula and cut-off', '(UMg × PCr)/(0.7 × PMg × UCr) × 100; >2% renal wasting'),
+  f('fc-tdp', 'magnesium', 'Torsades treatment', 'MgSO₄ 2 g IV regardless of serum Mg'),
+  f('fc-ppi', 'magnesium', 'PPI hypomagnesemia mechanism', 'Impaired intestinal TRPM6/7 absorption (FEMg low)'),
+  f('fc-mg-dtr', 'magnesium', 'First sign of Mg toxicity to monitor', 'Loss of deep tendon reflexes (≈2–3 mmol/L) before respiratory depression'),
+  f('fc-sglt2-mg', 'magnesium', 'SGLT2 inhibitors and Mg', 'Slightly raise serum Mg (not a cause of hypomagnesemia)'),
+
+  f('fc-refeed', 'phosphate', 'Refeeding: monitoring in high-risk patients', 'K, PO₄, Mg every 12 h for 3 days; thiamine before feeding'),
+  f('fc-fcm', 'phosphate', 'IV iron most associated with hypophosphatemia', 'Ferric carboxymaltose (FGF23-mediated)'),
+
+  f('fc-winters', 'acidbase', 'Winters formula', 'pCO₂ = 1.5 × HCO₃ + 8 ± 2'),
+  f('fc-metalk', 'acidbase', 'Expected pCO₂ in metabolic alkalosis', '0.7 × HCO₃ + 21 ± 2'),
+  f('fc-resp', 'acidbase', 'HCO₃ change per 10 mmHg pCO₂: acute/chronic acidosis; acute/chronic alkalosis', '+1 / +3.5; −2 / −4'),
+  f('fc-ag-alb', 'acidbase', 'Albumin correction of the anion gap', '+2.5 per 1 g/dL albumin below 4'),
+  f('fc-dd', 'acidbase', 'Δ/Δ >2 means…', 'Concurrent metabolic alkalosis (or prior compensated respiratory acidosis)'),
+  f('fc-goldmark', 'acidbase', 'GOLDMARK', 'Glycols, Oxoproline, L-lactate, D-lactate, Methanol, Aspirin, Renal failure, Ketoacidosis'),
+  f('fc-uag', 'acidbase', 'Negative urine anion gap means…', 'High NH₄⁺ excretion → GI HCO₃ loss (not distal RTA)'),
+  f('fc-ucl', 'acidbase', 'Urine Cl <25 in metabolic alkalosis', 'Chloride (saline)-responsive: vomiting, remote diuretics'),
+  f('fc-dka-def', 'acidbase', 'DKA definition (2024)', 'Glucose ≥200 or known diabetes; β-OHB ≥3.0; pH <7.3 or HCO₃ <18'),
+]
