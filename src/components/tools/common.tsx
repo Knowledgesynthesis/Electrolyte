@@ -30,8 +30,8 @@ export function RichFinding({ tone, text, title }: { tone?: Tone; text: string; 
 }
 
 export function Grid({ children, cols = 2 }: { children: ReactNode; cols?: 2 | 3 | 4 }) {
-  const c = { 2: 'sm:grid-cols-2', 3: 'sm:grid-cols-3', 4: 'sm:grid-cols-2 lg:grid-cols-4' }[cols]
-  return <div className={cn('grid grid-cols-1 gap-4', c)}>{children}</div>
+  const c = { 2: 'grid-cols-1 sm:grid-cols-2', 3: 'grid-cols-2 sm:grid-cols-3', 4: 'grid-cols-2 lg:grid-cols-4' }[cols]
+  return <div className={cn('grid gap-3 sm:gap-4', c)}>{children}</div>
 }
 
 export function Panel({ title, children, className }: { title?: ReactNode; children: ReactNode; className?: string }) {

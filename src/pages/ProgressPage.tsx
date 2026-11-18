@@ -60,7 +60,7 @@ export default function ProgressPage() {
       </div>
 
       <div className="mt-10 grid gap-6 md:grid-cols-2">
-        <Card className="p-5">
+        <Card className="min-w-0 p-5">
           <h2 className="mb-3 flex items-center gap-2 font-semibold">
             <CheckCircle2 className="h-5 w-5 text-danger" /> To revisit ({missed.length})
           </h2>
@@ -87,7 +87,7 @@ export default function ProgressPage() {
             </LinkButton>
           )}
         </Card>
-        <Card className="p-5">
+        <Card className="min-w-0 p-5">
           <h2 className="mb-3 flex items-center gap-2 font-semibold">
             <Award className="h-5 w-5 text-primary" /> Cases
           </h2>

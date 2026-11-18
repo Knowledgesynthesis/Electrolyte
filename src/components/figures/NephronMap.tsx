@@ -73,7 +73,7 @@ const SEGS: Seg[] = [
     name: 'Collecting duct',
     path: 'M352 70 L 380 70 L 380 360',
     color: '#f59e0b',
-    labelAt: [390, 210],
+    labelAt: [296, 270],
     na: '~2–3%',
     transporters: 'Principal cells: ENaC, ROMK/BK, AQP2 (V2/ADH). Intercalated cells: H⁺-ATPase, pendrin',
     handles: ['K secretion (aldosterone × distal flow)', 'Water reabsorption under ADH', 'Acid secretion (NH₄⁺ trapping)'],

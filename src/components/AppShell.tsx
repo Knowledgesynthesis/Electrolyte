@@ -28,7 +28,7 @@ function Logo() {
   return (
     <Link to="/" className="flex items-center gap-2 font-bold tracking-tight" aria-label="Electrolyte Atlas home">
       <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-sky-500 to-violet-600 text-sm text-white shadow-sm">Na⁺</span>
-      <span className="text-lg">Electrolyte Atlas</span>
+      <span className="whitespace-nowrap text-base sm:text-lg">Electrolyte Atlas</span>
     </Link>
   )
 }

@@ -57,8 +57,8 @@ export function BlockView({ block, order }: { block: Block; order: string[] }) {
       const Icon = c.icon
       return (
         <aside className={cn('rounded-xl border p-4', c.cls)}>
-          <div className="mb-1.5 flex items-center gap-2 text-sm font-semibold">
-            <Icon className={cn('h-4 w-4', c.iconCls)} />
+          <div className="mb-1.5 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-sm font-semibold">
+            <Icon className={cn('h-4 w-4 shrink-0', c.iconCls)} />
             <span className={c.iconCls}>{c.label}</span>
             {block.title && <span className="text-foreground">· {block.title}</span>}
             <Cite ids={block.refs} order={order} />

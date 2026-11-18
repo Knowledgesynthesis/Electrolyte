@@ -1,4 +1,4 @@
-import { useId } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 
 export interface Series {
   name: string
@@ -32,8 +32,16 @@ export function LineChart({
   height?: number
 }) {
   const id = useId()
-  const W = 640
-  const H = height
+  const wrap = useRef<HTMLDivElement>(null)
+  const [W, setW] = useState(640)
+  useEffect(() => {
+    const el = wrap.current
+    if (!el || typeof ResizeObserver === 'undefined') return
+    const ro = new ResizeObserver(([e]) => setW(Math.max(280, Math.round(e.contentRect.width))))
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [])
+  const H = W < 480 ? Math.round(height * 0.85) : height
   const pad = { l: 44, r: 16, t: 14, b: 34 }
   const all = [...series.flatMap((s) => s.values), ...hlines.map((h) => h.y), ...(band ? [band.from, band.to] : [])].filter(Number.isFinite)
   let lo = Math.floor(Math.min(...all) - 1)
@@ -46,10 +54,12 @@ export function LineChart({
   const x = (i: number) => pad.l + (i / Math.max(n, 1)) * (W - pad.l - pad.r)
   const y = (v: number) => pad.t + (1 - (v - lo) / (hi - lo)) * (H - pad.t - pad.b)
   const yTicks = ticks(lo, hi, 5)
-  const xTicks = Array.from({ length: Math.floor(n / 6) + 1 }, (_, i) => i * 6).filter((t) => t <= n)
+  const xStep = n > 48 ? 24 : 6
+  const xTicks = Array.from({ length: Math.floor(n / xStep) + 1 }, (_, i) => i * xStep).filter((t) => t <= n)
 
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-labelledby={`${id}-t`}>
+    <div ref={wrap} className="w-full">
+    <svg viewBox={`0 0 ${W} ${H}`} width={W} height={H} className="block h-auto w-full" role="img" aria-labelledby={`${id}-t`}>
       <title id={`${id}-t`}>{`${yLabel} over time: ${series.map((s) => `${s.name} ends at ${s.values[s.values.length - 1]?.toFixed(1)}`).join('; ')}`}</title>
       {band && (
         <g>
@@ -98,6 +108,7 @@ export function LineChart({
         />
       ))}
     </svg>
+    </div>
   )
 }
 

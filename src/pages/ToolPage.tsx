@@ -8,6 +8,8 @@ import { Card } from '@/components/ui'
 import { useSettings } from '@/stores/settings'
 import NotFound from './NotFound'
 
+const UNIT_TOOLS = new Set(['na-workup', 'osm', 'hyperk', 'ca-adjust', 'mg-planner', 'acid-base', 'units'])
+
 export default function ToolPage() {
   const { toolId = '' } = useParams()
   const tool = TOOL_BY_ID[toolId]
@@ -23,12 +25,12 @@ export default function ToolPage() {
         <div className="text-sm font-medium text-muted-foreground">{MODULE_BY_ID[tool.module].title}</div>
         <h1 className="text-3xl font-bold tracking-tight">{tool.title}</h1>
         <p className="mt-2 text-muted-foreground">{tool.summary}</p>
-        <p className="mt-1 text-xs text-muted-foreground">
+        {UNIT_TOOLS.has(tool.id) && <p className="mt-1 text-xs text-muted-foreground">
           Units: {units === 'SI' ? 'SI (mmol/L)' : 'conventional (mg/dL)'} —{' '}
           <Link to="/settings" className="text-primary hover:underline">
             change
           </Link>
-        </p>
+        </p>}
       </div>
       <Card className="p-4 sm:p-6">
         <Suspense fallback={<div className="h-64 animate-pulse rounded-xl bg-muted" />}>

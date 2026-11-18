@@ -45,7 +45,7 @@ export default function LessonPage() {
             <Badge>
               <Clock className="h-3 w-3" /> {lesson.minutes} min
             </Badge>
-            {qCount > 0 && <Badge tone="primary">{qCount} practice questions</Badge>}
+            {qCount > 0 && <Badge tone="primary">{qCount} practice question{qCount === 1 ? '' : 's'}</Badge>}
             {done && (
               <Badge tone="ok">
                 <CheckCircle2 className="h-3 w-3" /> Completed

@@ -3,6 +3,7 @@ import { CASES } from '@/content/cases'
 import { GLOSSARY } from '@/content/glossary'
 import { LESSONS, MODULE_BY_ID } from '@/content/modules'
 import { TOOLS } from '@/content/tools'
+import type { Block } from '@/content/types'
 
 export interface SearchItem {
   kind: 'Lesson' | 'Section' | 'Tool' | 'Algorithm' | 'Case' | 'Glossary'
@@ -14,13 +15,33 @@ export interface SearchItem {
 
 let INDEX: SearchItem[] | null = null
 
+function blockText(b: Block): string {
+  switch (b.kind) {
+    case 'p':
+    case 'h':
+      return b.text
+    case 'list':
+      return b.items.join(' ')
+    case 'callout':
+      return [b.title ?? '', b.text ?? '', ...(b.items ?? [])].join(' ')
+    case 'table':
+      return [...b.head, ...b.rows.flat()].join(' ')
+    case 'formula':
+      return [b.name, b.expr, b.note ?? ''].join(' ')
+    case 'steps':
+      return b.steps.map((x) => `${x.title} ${x.text}`).join(' ')
+    default:
+      return ''
+  }
+}
+
 export function searchIndex(): SearchItem[] {
   if (INDEX) return INDEX
   const items: SearchItem[] = []
   for (const l of LESSONS) {
     items.push({ kind: 'Lesson', title: l.title, subtitle: MODULE_BY_ID[l.module].title, to: `/learn/${l.id}`, hay: `${l.title} ${l.summary} ${l.objectives.join(' ')}`.toLowerCase() })
     for (const s of l.sections) {
-      const text = s.blocks.map((b) => ('text' in b && typeof b.text === 'string' ? b.text : '') + ('items' in b && Array.isArray(b.items) ? b.items.join(' ') : '') + (b.kind === 'table' ? b.rows.flat().join(' ') : '')).join(' ')
+      const text = s.blocks.map(blockText).join(' ')
       items.push({ kind: 'Section', title: s.title, subtitle: l.title, to: `/learn/${l.id}#${s.id}`, hay: `${s.title} ${text}`.toLowerCase() })
     }
   }
